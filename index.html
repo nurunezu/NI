@@ -1,241 +1,137 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIコラボ 導入ワクワクガイド</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: #fffaf5;
-            color: #1e293b;
-            line-height: 1.7;
-        }
-        .hero-gradient {
-            background: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
-        }
-        .ai-gradient {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-        }
-        .premium-shadow {
-            box-shadow: 0 30px 60px -12px rgba(249, 115, 22, 0.2);
-        }
-        .step-circle {
-            background: linear-gradient(135deg, #fb923c 0%, #f87171 100%);
-        }
-        .highlight-box {
-            background: linear-gradient(to right, #fff7ed, #ffffff);
-            border-left: 8px solid #f97316;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>NI Collabo 360 初期設定手順マニュアル</title>
+<style>
+  body {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+  .step-container {
+    background-color: #fff;
+    padding: 20px 30px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 8px;
+    margin-top: 0;
+  }
+  ul {
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 12px;
+  }
+  .pdf-link {
+    display: inline-block;
+    font-size: 0.85em;
+    color: #fff;
+    background-color: #e74c3c;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+  }
+  .pdf-link:hover {
+    background-color: #c0392b;
+  }
+  .note {
+    font-size: 0.9em;
+    color: #666;
+    background-color: #e8f4f8;
+    padding: 10px;
+    border-left: 4px solid #3498db;
+    margin-top: 10px;
+  }
+</style>
 </head>
-<body class="pb-24">
+<body>
 
-    <!-- Header -->
-    <header class="hero-gradient text-white pt-24 pb-52 px-8 text-center rounded-b-[5rem] shadow-2xl relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-full opacity-20">
-            <svg width="100%" height="100%"><pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.5" fill="white" /></pattern><rect width="100%" height="100%" fill="url(#dots)" /></svg>
-        </div>
-        <div class="mb-8 inline-block bg-white/20 text-white px-8 py-2 rounded-full text-sm font-black backdrop-blur-md border border-white/30 tracking-[0.2em] uppercase">
-            Efficiency Revolution
-        </div>
-        <h1 class="text-4xl font-black mb-8 leading-tight">
-            今までの作業が<br>
-            <span class="text-yellow-200 underline decoration-wavy decoration-orange-300">バカバカしくなる</span><br>
-            おすすめ機能３選
-        </h1>
-        <p class="text-orange-50 text-lg opacity-95 leading-relaxed font-bold px-4">
-            「ITは難しそう…」そんな先入観を捨ててください。<br>
-            総務の時間を1日2時間作り出す、最強の3つを紹介します。
-        </p>
-    </header>
+  <h1>NI Collabo 360 初期設定手順</h1>
 
-    <main class="max-w-md mx-auto px-6 -mt-36 relative z-10">
-        
-        <!-- Feature 1: Workflow -->
-        <section class="bg-white rounded-[3.5rem] p-10 premium-shadow mb-12 border border-orange-50">
-            <div class="flex items-center mb-10 text-orange-600">
-                <div class="w-20 h-20 step-circle rounded-3xl flex items-center justify-center text-5xl mr-5 shadow-xl text-white">✍️</div>
-                <div>
-                    <h2 class="font-black text-2xl leading-none">電子承認フロー</h2>
-                    <p class="text-xs font-bold tracking-widest uppercase opacity-40 mt-2">Workflow</p>
-                </div>
-            </div>
+  <div class="step-container">
+    <h2>ステップ1：使用アプリケーション（機能）の全体設定</h2>
+    <ul>
+      <li>会社としてどの機能を使うか（または使わせないか）を標準版（PC版）および携帯版ごとに設定します。[1]</li>
+      <li><strong>設定場所：</strong>「システム設定」＞「共通」＞「使用アプリケーション」
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=370" target="_blank" class="pdf-link">PDF P.370</a>
+      </li>
+      <li>チェックを外したアプリケーションはメニューやポータルに表示されなくなります。[2]</li>
+    </ul>
+  </div>
 
-            <div class="space-y-10">
-                <div class="highlight-box p-6 rounded-r-3xl">
-                    <h4 class="font-black text-xl text-orange-800 leading-snug">「あの書類、誰が持ってる？」を廃止</h4>
-                    <p class="text-base text-gray-600 mt-4 leading-relaxed font-medium">
-                        有給、経費、備品購入…今まで机に山積みだった「紙」が消えます。スマホで申請された瞬間、承認ルートが自動で動き出し、進捗を100%把握できます。
-                    </p>
-                </div>
+  <div class="step-container">
+    <h2>ステップ2：運用開始時のデータ一括登録（CSV読み込み）</h2>
+    <p>運用開始時には、CSVファイルを使った一括登録を活用して設定の手間を省きます。</p>
+    <ul>
+      <li><strong>メールアカウントの一括登録：</strong>「システム設定」＞「メール」＞「アカウントCSV読み込み」<br>
+        全社員のメール設定をサンプルファイルを使用して一括で登録できます。[3, 4]
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=45" target="_blank" class="pdf-link">PDF P.45</a>
+      </li>
+      <li><strong>スケジュールの過去データ移行：</strong>「システム設定」＞「スケジュール」＞「CSV読み込み」<br>
+        過去のスケジュールデータなどを一括で登録可能です。[5]
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=67" target="_blank" class="pdf-link">PDF P.67</a>
+      </li>
+    </ul>
+  </div>
 
-                <div class="grid grid-cols-1 gap-4">
-                    <div class="bg-orange-50/50 p-6 rounded-3xl border border-orange-100">
-                        <p class="text-xs font-black text-orange-600 mb-2 flex items-center uppercase tracking-wider">
-                            <span class="text-xl mr-2">📲</span> 現場は楽に
-                        </p>
-                        <p class="text-base text-gray-800 leading-relaxed font-bold">レシートをカメラで撮って送信。<br>ハンコのために事務所へ戻る必要なし。</p>
-                    </div>
-                    <div class="bg-orange-50/50 p-6 rounded-3xl border border-orange-100">
-                        <p class="text-xs font-black text-orange-600 mb-2 flex items-center uppercase tracking-wider">
-                            <span class="text-xl mr-2">📊</span> 総務は正確に
-                        </p>
-                        <p class="text-base text-gray-800 leading-relaxed font-bold">承認済みの数字をCSVで出力。<br>会計ソフトへの打ち直し作業がゼロに。</p>
-                    </div>
-                </div>
+  <div class="step-container">
+    <h2>ステップ3：ポータルの基本設定</h2>
+    <p>社員がログインした際に迷わず操作できるよう、トップ画面（ポータル）を整備します。</p>
+    <ul>
+      <li><strong>ポータル基本設定：</strong>「システム設定」＞「ポータル」＞「基本設定」<br>
+        個人ごとのメニューパレット設定を許可するかどうか等の全体ルールを設定します。[6]
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=14" target="_blank" class="pdf-link">PDF P.14</a>
+      </li>
+      <li><strong>共有ポータル：</strong>「システム設定」＞「ポータル」＞「共有ポータル」<br>
+        部署や課単位で利用するポータル（スケジュールや新着情報の配置）を設定します。[7, 8]
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=19" target="_blank" class="pdf-link">PDF P.19</a>
+      </li>
+      <li><strong>固定ポータル：</strong>「システム設定」＞「ポータル」＞「固定ポータル」<br>
+        会社として決められたポータルだけを強制して利用させたい場合に設定します。[9, 10]
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=27" target="_blank" class="pdf-link">PDF P.27</a>
+      </li>
+    </ul>
+  </div>
 
-                <p class="text-sm font-bold text-gray-400 text-center italic">※まずは一番数が多い「有給申請」から！</p>
-            </div>
-        </section>
+  <div class="step-container">
+    <h2>ステップ4：各機能の「基本設定」の実施</h2>
+    <p>利用する機能ごとの「基本設定」メニューを確認し、自社のルールに合わせて詳細を設定します。</p>
+    <ul>
+      <li><strong>スケジュール：</strong>「システム設定」＞「スケジュール」＞「基本設定」<br>
+        閲覧制限対象の表示方法や、組織スケジュールの利用有無を設定します。[11, 12]
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=59" target="_blank" class="pdf-link">PDF P.59</a>
+      </li>
+      <li><strong>交通費精算：</strong>「システム設定」＞「交通費精算」＞「基本設定」<br>
+        交通機関のプルダウン項目などを設定します。[13]
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=107" target="_blank" class="pdf-link">PDF P.107</a>
+      </li>
+      <li><strong>ワークフロー（申請書類作成）：</strong>「システム設定」＞「ワークフロー」＞「申請書類作成」<br>
+        各種申請書のレイアウトや申請経路、管理番号の書式などを設定します。[14, 15]
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=220" target="_blank" class="pdf-link">PDF P.220</a>
+      </li>
+    </ul>
+  </div>
 
-        <!-- Feature 2: Digital Board -->
-        <section class="bg-white rounded-[3.5rem] p-10 premium-shadow mb-12 border border-orange-50">
-            <div class="flex items-center mb-10 text-orange-600">
-                <div class="w-20 h-20 step-circle rounded-3xl flex items-center justify-center text-5xl mr-5 shadow-xl text-white">📢</div>
-                <div>
-                    <h2 class="font-black text-2xl leading-none">スマート回覧板</h2>
-                    <p class="text-xs font-bold tracking-widest uppercase opacity-40 mt-2">Smart Board</p>
-                </div>
-            </div>
-
-            <div class="space-y-10">
-                <div class="highlight-box p-6 rounded-r-3xl">
-                    <h4 class="font-black text-xl text-orange-800 leading-snug">「言った言わない」を撲滅</h4>
-                    <p class="text-base text-gray-600 mt-4 leading-relaxed font-medium">
-                        全社通知を紙で配る必要はありません。社員のスマホへ即通知。誰が「いつ」確認したかが自動で記録されます。
-                    </p>
-                </div>
-
-                <div class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-200">
-                    <p class="text-base font-black mb-6 flex items-center text-slate-800 underline decoration-orange-400 decoration-4 underline-offset-8">
-                        <span class="text-2xl mr-3">🎯</span> 総務を助ける「追いかけ機能」
-                    </p>
-                    <ul class="space-y-5 text-base text-gray-700 font-bold leading-relaxed">
-                        <li class="flex items-start">
-                            <span class="text-orange-500 mr-3 mt-1.5 text-xs">●</span>
-                            <span>未読者リストを1秒で抽出。<br>読んでいない人にだけ「再通知」が可能。</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-orange-500 mr-3 mt-1.5 text-xs">●</span>
-                            <span>アンケート集計も一瞬。<br>健康診断や弁当予約の集計が自動完了。</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Feature 3: Visual Field Support -->
-        <section class="bg-white rounded-[3.5rem] p-10 premium-shadow mb-16 border border-orange-50">
-            <div class="flex items-center mb-10 text-orange-600">
-                <div class="w-20 h-20 step-circle rounded-3xl flex items-center justify-center text-5xl mr-5 shadow-xl text-white">🛠️</div>
-                <div>
-                    <h2 class="font-black text-2xl leading-none">現場NOW！＆写真報告</h2>
-                    <p class="text-xs font-bold tracking-widest uppercase opacity-40 mt-2">Field Support</p>
-                </div>
-            </div>
-
-            <div class="space-y-10">
-                <div class="highlight-box p-6 rounded-r-3xl">
-                    <h4 class="font-black text-xl text-orange-800 leading-snug">会社にいながら現場を「目撃」</h4>
-                    <p class="text-base text-gray-600 mt-4 leading-relaxed font-medium">
-                        プレス機の不具合。担当者がスマホで写真をアップすれば、即座に事務所で状況を把握。対応スピードを3倍にします。
-                    </p>
-                </div>
-
-                <div class="space-y-4">
-                    <div class="flex items-center bg-orange-50/50 p-6 rounded-3xl border border-orange-100 shadow-sm">
-                        <div class="bg-white w-14 h-14 rounded-2xl flex items-center justify-center shadow-md mr-5 text-3xl">📍</div>
-                        <div class="flex-1 text-base">
-                            <h5 class="font-black text-orange-950 underline decoration-orange-200 decoration-4 underline-offset-4">GPS連動・行先管理</h5>
-                            <p class="text-sm text-orange-800 mt-1.5 font-bold leading-snug">「今・どこで」作業中か。電話に即答可能。</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center bg-orange-50/50 p-6 rounded-3xl border border-orange-100 shadow-sm">
-                        <div class="bg-white w-14 h-14 rounded-2xl flex items-center justify-center shadow-md mr-5 text-3xl">🖼️</div>
-                        <div class="flex-1 text-base">
-                            <h5 class="font-black text-orange-950 underline decoration-orange-200 decoration-4 underline-offset-4">写真がそのまま「資産」に</h5>
-                            <p class="text-sm text-orange-800 mt-1.5 font-bold leading-snug">撮った写真は自動整理。ノウハウが貯まる。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Intermediate Closing & Action -->
-        <section class="text-center py-16 px-10 mb-20 bg-orange-100/50 rounded-[4rem] border-4 border-dashed border-orange-200 relative overflow-hidden">
-            <h3 class="text-3xl font-black text-orange-800 mb-8 leading-tight">
-                まずはこの３つの機能から<br>試してみませんか？
-            </h3>
-            <p class="text-lg text-gray-700 leading-relaxed mb-10 font-bold">
-                効果を実感できたら、<br>他の機能も少しずつ使っていきましょう！
-            </p>
-            
-            <button class="hero-gradient text-white w-full py-8 rounded-[2.5rem] font-black text-2xl shadow-2xl shadow-orange-300 active:scale-95 transition-all animate-bounce">
-                まずは 1つの機能から！🚀
-            </button>
-        </section>
-
-        <!-- SPECIAL PROPOSAL: AI FOR GA -->
-        <section class="ai-gradient rounded-[4.5rem] p-12 shadow-2xl mb-12 text-white relative overflow-hidden">
-            <div class="absolute -right-20 -top-20 w-80 h-80 bg-white/10 rounded-full"></div>
-            
-            <div class="flex items-center mb-12">
-                <div class="w-24 h-24 bg-white/20 rounded-[2.5rem] flex items-center justify-center text-6xl mr-6 backdrop-blur-md border-2 border-white/30 shadow-2xl">🤖</div>
-                <div>
-                    <h2 class="font-black text-3xl text-white leading-none">総務専用AIの提案</h2>
-                    <p class="text-[10px] text-white/70 font-black tracking-[0.2em] uppercase mt-2">Google Workspace Plus</p>
-                </div>
-            </div>
-
-            <div class="mb-12 p-8 bg-white/10 rounded-[3rem] border border-white/20 shadow-inner">
-                <p class="text-sm font-black mb-2 opacity-90 tracking-widest text-center uppercase">導入推奨プラン：Business Plus</p>
-                <div class="flex items-baseline justify-center space-x-2">
-                    <p class="text-4xl font-black italic">￥2,260</p>
-                    <p class="text-base font-bold opacity-80">/ 1ユーザー・月額</p>
-                </div>
-                <p class="text-xs text-white/90 mt-6 text-center leading-relaxed font-bold bg-black/10 py-3 rounded-full">高度なセキュリティと5TBのストレージを備えた<br>「総務の守護神」プラン</p>
-            </div>
-
-            <div class="space-y-8">
-                <div class="bg-white/10 p-8 rounded-[3rem] backdrop-blur-sm border border-white/20">
-                    <h4 class="font-black text-xl mb-4 flex items-center">
-                        <span class="bg-white text-orange-600 w-10 h-10 rounded-full flex items-center justify-center text-sm mr-4 font-black">1</span>
-                        NotebookLM：400Pを一秒検索
-                    </h4>
-                    <p class="text-base leading-relaxed text-white/95 font-medium">
-                        マニュアルPDFを読み込ませれば、AIがあなたの専属コンサルに。「設定、どこ？」と聞くだけで、ページをめくららずに即回答！
-                    </p>
-                </div>
-                <div class="bg-white/10 p-8 rounded-[3rem] backdrop-blur-sm border border-white/20">
-                    <h4 class="font-black text-xl mb-4 flex items-center">
-                        <span class="bg-white text-orange-600 w-10 h-10 rounded-full flex items-center justify-center text-sm mr-4 font-black">2</span>
-                        社外秘OK！企業用Gemini
-                    </h4>
-                    <p class="text-base leading-relaxed text-white/95 font-medium">
-                        法人プランのAIはデータを学習しません。従業員データや社内規定を相談しても、高度なセキュリティで守られます。
-                    </p>
-                </div>
-                <div class="bg-white/10 p-8 rounded-[3rem] backdrop-blur-sm border border-white/20">
-                    <h4 class="font-black text-xl mb-4 flex items-center">
-                        <span class="bg-white text-orange-600 w-10 h-10 rounded-full flex items-center justify-center text-sm mr-4 font-black">3</span>
-                        5TBの広大なデータ金庫
-                    </h4>
-                    <p class="text-base leading-relaxed text-white/95 font-medium">
-                        重いメンテナンス写真も動画も余裕の保存。高度な管理機能が、総務の責任と大切なデータを強力に守ります。
-                    </p>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="mt-24 text-center pb-16">
-        <div class="w-32 h-2 bg-gradient-to-r from-orange-400 to-red-500 mx-auto mb-10 rounded-full"></div>
-        <p class="text-gray-400 text-sm tracking-[0.3em] font-black uppercase">Work Innovation Support Project</p>
-    </footer>
+  <div class="note">
+    ※各PDFリンクをクリックすると、ブラウザ上でマニュアルPDFの該当ページが直接開きます（ご利用のブラウザやPDFビューアの仕様によって、該当ページへのジャンプが機能しない場合があります）。
+  </div>
 
 </body>
 </html>
