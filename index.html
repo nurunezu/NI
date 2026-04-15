@@ -2,135 +2,145 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>NI Collabo 360 初期設定手順マニュアル</title>
+<title>NI Collabo 360 初期設定ガイド（わかりやすい版）</title>
 <style>
   body {
     font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-    line-height: 1.6;
+    line-height: 1.8;
     color: #333;
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #f4f7f6;
   }
   h1 {
     text-align: center;
     color: #2c3e50;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    font-size: 1.8em;
   }
   .step-container {
     background-color: #fff;
-    padding: 20px 30px;
-    margin-bottom: 25px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 25px 35px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   }
   h2 {
     color: #0056b3;
-    border-bottom: 2px solid #0056b3;
-    padding-bottom: 8px;
+    border-bottom: 2px solid #e1e8ed;
+    padding-bottom: 10px;
     margin-top: 0;
+    font-size: 1.4em;
+  }
+  h3 {
+    color: #e67e22;
+    font-size: 1.1em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  p {
+    margin-bottom: 15px;
   }
   ul {
     padding-left: 20px;
   }
   li {
-    margin-bottom: 12px;
+    margin-bottom: 15px;
   }
   .pdf-link {
     display: inline-block;
     font-size: 0.85em;
     color: #fff;
-    background-color: #e74c3c;
-    padding: 3px 8px;
-    border-radius: 4px;
+    background-color: #3498db;
+    padding: 4px 10px;
+    border-radius: 20px;
     text-decoration: none;
     margin-left: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: background-color 0.3s;
   }
   .pdf-link:hover {
-    background-color: #c0392b;
+    background-color: #2980b9;
   }
-  .note {
-    font-size: 0.9em;
-    color: #666;
-    background-color: #e8f4f8;
-    padding: 10px;
-    border-left: 4px solid #3498db;
-    margin-top: 10px;
+  .badge {
+    display: inline-block;
+    background-color: #ecf0f1;
+    color: #7f8c8d;
+    font-size: 0.8em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
   }
 </style>
 </head>
 <body>
 
-  <h1>NI Collabo 360 初期設定手順</h1>
+  <h1>直感でわかる！NI Collabo 360 初期設定ガイド</h1>
 
   <div class="step-container">
-    <h2>ステップ1：使用アプリケーション（機能）の全体設定</h2>
+    <h2>ステップ1：使わない機能を隠して画面をスッキリさせる</h2>
+    <div class="badge">専門用語：使用アプリケーションの全体設定</div>
+    <p>NI Collabo 360には数十個の機能がありますが、最初から全部のボタンを表示しておくと、社員が「どれを押せばいいの？」と迷ってしまいます[1]。</p>
+    <p>そこで、<strong>自社で使わない機能はあらかじめシステムから隠して、社員の画面をシンプルで使いやすくする</strong>ための設定を行います[1]。</p>
+    <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=370" target="_blank" class="pdf-link">マニュアルを見る (P.370)</a>
+  </div>
+
+  <div class="step-container">
+    <h2>ステップ2：社員のデータを「エクセル」で一気に流し込む</h2>
+    <div class="badge">専門用語：CSV読み込み</div>
+    <p>社員全員のメールアドレスや、これまで使っていた過去のスケジュールなどを、管理者が1件ずつ手作業で登録するのは大変です。</p>
+    <p>そこで、<strong>エクセル（CSVファイル）で作った名簿やリストを使って、全員分のデータを一瞬でシステムに取り込む（自動登録する）</strong>ための作業です[2-4]。</p>
     <ul>
-      <li>会社としてどの機能を使うか（または使わせないか）を標準版（PC版）および携帯版ごとに設定します。[1]</li>
-      <li><strong>設定場所：</strong>「システム設定」＞「共通」＞「使用アプリケーション」
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=370" target="_blank" class="pdf-link">PDF P.370</a>
-      </li>
-      <li>チェックを外したアプリケーションはメニューやポータルに表示されなくなります。[2]</li>
+      <li>メールアカウントの一括登録 <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=45" target="_blank" class="pdf-link">マニュアルを見る (P.45)</a></li>
+      <li>スケジュールの過去データ移行 <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=67" target="_blank" class="pdf-link">マニュアルを見る (P.67)</a></li>
     </ul>
   </div>
 
   <div class="step-container">
-    <h2>ステップ2：運用開始時のデータ一括登録（CSV読み込み）</h2>
-    <p>運用開始時には、CSVファイルを使った一括登録を活用して設定の手間を省きます。</p>
+    <h2>ステップ3：社員が最初に見る「トップ画面」のルールを決める</h2>
+    <div class="badge">専門用語：ポータルの設定</div>
+    <p>社員がシステムにログインした直後に表示されるトップ画面（ポータル）をどう見せるかを決めます[5]。</p>
     <ul>
-      <li><strong>メールアカウントの一括登録：</strong>「システム設定」＞「メール」＞「アカウントCSV読み込み」<br>
-        全社員のメール設定をサンプルファイルを使用して一括で登録できます。[3, 4]
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=45" target="_blank" class="pdf-link">PDF P.45</a>
+      <li>
+        <strong>個人の自由度を決める（ポータル基本設定）：</strong><br>
+        画面の上の方にある「よく使う機能へのショートカットボタン（メニューパレット）」を、社員が自分の好きなように並び替えてもいいよと許可するか、それとも「会社が決めた通りに使いなさい」と禁止するかを決めるルールです[6]。
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=14" target="_blank" class="pdf-link">マニュアルを見る (P.14)</a>
       </li>
-      <li><strong>スケジュールの過去データ移行：</strong>「システム設定」＞「スケジュール」＞「CSV読み込み」<br>
-        過去のスケジュールデータなどを一括で登録可能です。[5]
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=67" target="_blank" class="pdf-link">PDF P.67</a>
+      <li>
+        <strong>部署ごとの専用掲示板を作る（共有ポータル）：</strong><br>
+        「営業部がログインした時は、売上目標とみんなの予定表を見せる」「総務部の画面には、全社へのお知らせを大きく出す」といったように、部署やチームごとに見せたい情報がまとまった専用のトップ画面を作ります[7]。
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=19" target="_blank" class="pdf-link">マニュアルを見る (P.19)</a>
+      </li>
+      <li>
+        <strong>会社の画面を強制する（固定ポータル）：</strong><br>
+        社員が「自分専用の使いやすい画面」を作ることを禁止し、会社や部署が作ったトップ画面を強制的に表示させ続けるための設定です[8]。絶対に見てほしい情報がある場合に強権を発動する機能です[8]。
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=27" target="_blank" class="pdf-link">マニュアルを見る (P.27)</a>
       </li>
     </ul>
   </div>
 
   <div class="step-container">
-    <h2>ステップ3：ポータルの基本設定</h2>
-    <p>社員がログインした際に迷わず操作できるよう、トップ画面（ポータル）を整備します。</p>
+    <h2>ステップ4：各機能の「自社ルール」を細かく決める</h2>
+    <div class="badge">専門用語：各機能の基本設定</div>
+    <p>それぞれの機能に対して、会社ごとの運用ルールや選択肢のフォーマットを作っていきます。</p>
     <ul>
-      <li><strong>ポータル基本設定：</strong>「システム設定」＞「ポータル」＞「基本設定」<br>
-        個人ごとのメニューパレット設定を許可するかどうか等の全体ルールを設定します。[6]
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=14" target="_blank" class="pdf-link">PDF P.14</a>
+      <li>
+        <strong>スケジュールのルール：</strong><br>
+        他人の「非公開」の予定を見たとき、予定自体を完全に隠して見えなくするか、それとも「内容は内緒だけど予定は入っている」として時間帯だけはわかるようにするか等、プライバシーと情報共有のバランスを決めます[9]。
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=60" target="_blank" class="pdf-link">マニュアルを見る (P.60)</a>
       </li>
-      <li><strong>共有ポータル：</strong>「システム設定」＞「ポータル」＞「共有ポータル」<br>
-        部署や課単位で利用するポータル（スケジュールや新着情報の配置）を設定します。[7, 8]
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=19" target="_blank" class="pdf-link">PDF P.19</a>
+      <li>
+        <strong>交通費精算のルール：</strong><br>
+        社員が交通費を申請する画面で選ぶ、「電車」「バス」「タクシー」などの選択肢（プルダウン）を自社に合わせて作ります[10]。
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=107" target="_blank" class="pdf-link">マニュアルを見る (P.107)</a>
       </li>
-      <li><strong>固定ポータル：</strong>「システム設定」＞「ポータル」＞「固定ポータル」<br>
-        会社として決められたポータルだけを強制して利用させたい場合に設定します。[9, 10]
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=27" target="_blank" class="pdf-link">PDF P.27</a>
+      <li>
+        <strong>ワークフローのルール（ハンコ・稟議書）：</strong><br>
+        経費の申請書や稟議書などの「用紙フォーマット」を画面上に作ったり、「課長が承認した後に、部長が決裁する」というようなハンコリレー（承認ルート）のルールを作ります[11]。
+        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=220" target="_blank" class="pdf-link">マニュアルを見る (P.220)</a>
       </li>
     </ul>
-  </div>
-
-  <div class="step-container">
-    <h2>ステップ4：各機能の「基本設定」の実施</h2>
-    <p>利用する機能ごとの「基本設定」メニューを確認し、自社のルールに合わせて詳細を設定します。</p>
-    <ul>
-      <li><strong>スケジュール：</strong>「システム設定」＞「スケジュール」＞「基本設定」<br>
-        閲覧制限対象の表示方法や、組織スケジュールの利用有無を設定します。[11, 12]
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=59" target="_blank" class="pdf-link">PDF P.59</a>
-      </li>
-      <li><strong>交通費精算：</strong>「システム設定」＞「交通費精算」＞「基本設定」<br>
-        交通機関のプルダウン項目などを設定します。[13]
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=107" target="_blank" class="pdf-link">PDF P.107</a>
-      </li>
-      <li><strong>ワークフロー（申請書類作成）：</strong>「システム設定」＞「ワークフロー」＞「申請書類作成」<br>
-        各種申請書のレイアウトや申請経路、管理番号の書式などを設定します。[14, 15]
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=220" target="_blank" class="pdf-link">PDF P.220</a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="note">
-    ※各PDFリンクをクリックすると、ブラウザ上でマニュアルPDFの該当ページが直接開きます（ご利用のブラウザやPDFビューアの仕様によって、該当ページへのジャンプが機能しない場合があります）。
   </div>
 
 </body>
