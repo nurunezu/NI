@@ -1,147 +1,416 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>NI Collabo 360 初期設定ガイド（わかりやすい版）</title>
-<style>
-  body {
-    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-    line-height: 1.8;
-    color: #333;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f4f7f6;
-  }
-  h1 {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 40px;
-    font-size: 1.8em;
-  }
-  .step-container {
-    background-color: #fff;
-    padding: 25px 35px;
-    margin-bottom: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  }
-  h2 {
-    color: #0056b3;
-    border-bottom: 2px solid #e1e8ed;
-    padding-bottom: 10px;
-    margin-top: 0;
-    font-size: 1.4em;
-  }
-  h3 {
-    color: #e67e22;
-    font-size: 1.1em;
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
-  p {
-    margin-bottom: 15px;
-  }
-  ul {
-    padding-left: 20px;
-  }
-  li {
-    margin-bottom: 15px;
-  }
-  .pdf-link {
-    display: inline-block;
-    font-size: 0.85em;
-    color: #fff;
-    background-color: #3498db;
-    padding: 4px 10px;
-    border-radius: 20px;
-    text-decoration: none;
-    margin-left: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: background-color 0.3s;
-  }
-  .pdf-link:hover {
-    background-color: #2980b9;
-  }
-  .badge {
-    display: inline-block;
-    background-color: #ecf0f1;
-    color: #7f8c8d;
-    font-size: 0.8em;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NI Collabo 360 マニュアル検索システム</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #f1f5f9; }
+        .search-container { transition: all 0.3s ease; }
+        .search-focused { box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); border-color: #3b82f6; }
+        .result-card { animation: fadeIn 0.4s ease-out forwards; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .highlight { background-color: #fef08a; font-weight: bold; padding: 0 2px; border-radius: 2px; }
+    </style>
 </head>
-<body>
+<body class="text-slate-800 min-h-screen flex flex-col">
 
-  <h1>直感でわかる！NI Collabo 360 初期設定ガイド</h1>
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white py-12 shadow-md">
+        <div class="container mx-auto px-4 text-center max-w-4xl">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 tracking-tight"><i class="fas fa-book-open mr-3"></i>NI Collabo 360 設定FAQ検索</h1>
+            <p class="text-blue-100 text-lg mb-8">システム設定マニュアル（全374P）から、知りたい設定の該当ページを検索します。</p>
+            
+            <!-- Search Bar -->
+            <div class="relative w-full max-w-2xl mx-auto search-container bg-white rounded-full flex items-center p-2 border-2 border-transparent">
+                <i class="fas fa-search text-slate-400 text-xl ml-4"></i>
+                <input type="text" id="searchInput" 
+                    class="w-full bg-transparent border-none outline-none px-4 py-3 text-lg text-slate-700 placeholder-slate-400" 
+                    placeholder="例: 「ワークフロー 代理」「パスワード」「シングルサインオン」..."
+                    autocomplete="off">
+                <button id="searchBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold transition-colors flex items-center">
+                    検索
+                </button>
+                <button id="clearBtn" class="absolute right-32 text-slate-400 hover:text-slate-600 hidden">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+            </div>
+        </div>
+    </header>
 
-  <div class="step-container">
-    <h2>ステップ1：使わない機能を隠して画面をスッキリさせる</h2>
-    <div class="badge">専門用語：使用アプリケーションの全体設定</div>
-    <p>NI Collabo 360には数十個の機能がありますが、最初から全部のボタンを表示しておくと、社員が「どれを押せばいいの？」と迷ってしまいます[1]。</p>
-    <p>そこで、<strong>自社で使わない機能はあらかじめシステムから隠して、社員の画面をシンプルで使いやすくする</strong>ための設定を行います[1]。</p>
-    <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=371" target="_blank" class="pdf-link">マニュアルを見る (P.371)</a>
-  </div>
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
+        
+        <!-- Search Status -->
+        <div id="searchStatus" class="mb-6 text-slate-500 font-medium hidden flex justify-between items-end border-b border-slate-200 pb-2">
+            <span id="searchCount"></span>
+            <span class="text-xs text-slate-400"><i class="fas fa-file-pdf mr-1"></i>参照元: system_collabo.pdf</span>
+        </div>
 
-  <div class="step-container">
-    <h2>ステップ2：社員のデータを「エクセル」で一気に流し込む</h2>
-    <div class="badge">専門用語：CSV読み込み</div>
-    <p>社員全員のメールアドレスや、これまで使っていた過去のスケジュールなどを、管理者が1件ずつ手作業で登録するのは大変です。</p>
-    <p>そこで、<strong>エクセル（CSVファイル）で作った名簿やリストを使って、全員分のデータを一瞬でシステムに取り込む（自動登録する）</strong>ための作業です[2-4]。</p>
-    <ul>
-      <li>メールアカウントの一括登録 <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=46" target="_blank" class="pdf-link">マニュアルを見る (P.46)</a></li>
-      <li>スケジュールの過去データ移行 <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=68" target="_blank" class="pdf-link">マニュアルを見る (P.68)</a></li>
-    </ul>
-  </div>
+        <!-- Results Container -->
+        <div id="resultsContainer" class="space-y-4">
+            <!-- 初期状態のメッセージ -->
+            <div class="text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm" id="initialMessage">
+                <div class="bg-blue-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-search text-blue-500 text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-700 mb-2">調べたいキーワードを入力してください</h3>
+                <p class="text-slate-500 mb-6">マニュアル内の該当機能、設定方法、参照ページを即座にご案内します。</p>
+                <div class="flex flex-wrap justify-center gap-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mr-2 self-center">よく検索されるワード:</span>
+                    <button class="suggest-btn bg-white border border-slate-300 text-slate-600 px-3 py-1 rounded-full text-sm hover:border-blue-400 hover:text-blue-600 transition">ポータル</button>
+                    <button class="suggest-btn bg-white border border-slate-300 text-slate-600 px-3 py-1 rounded-full text-sm hover:border-blue-400 hover:text-blue-600 transition">代理申請</button>
+                    <button class="suggest-btn bg-white border border-slate-300 text-slate-600 px-3 py-1 rounded-full text-sm hover:border-blue-400 hover:text-blue-600 transition">CSV</button>
+                    <button class="suggest-btn bg-white border border-slate-300 text-slate-600 px-3 py-1 rounded-full text-sm hover:border-blue-400 hover:text-blue-600 transition">アクセス制限</button>
+                </div>
+            </div>
+        </div>
 
-  <div class="step-container">
-    <h2>ステップ3：社員が最初に見る「トップ画面」のルールを決める</h2>
-    <div class="badge">専門用語：ポータルの設定</div>
-    <p>社員がシステムにログインした直後に表示されるトップ画面（ポータル）をどう見せるかを決めます[5]。</p>
-    <ul>
-      <li>
-        <strong>個人の自由度を決める（ポータル基本設定）：</strong><br>
-        画面の上の方にある「よく使う機能へのショートカットボタン（メニューパレット）」を、社員が自分の好きなように並び替えてもいいよと許可するか、それとも「会社が決めた通りに使いなさい」と禁止するかを決めるルールです[6]。
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=15" target="_blank" class="pdf-link">マニュアルを見る (P.15)</a>
-      </li>
-      <li>
-        <strong>部署ごとの専用掲示板を作る（共有ポータル）：</strong><br>
-        「営業部がログインした時は、売上目標とみんなの予定表を見せる」「総務部の画面には、全社へのお知らせを大きく出す」といったように、部署やチームごとに見せたい情報がまとまった専用のトップ画面を作ります[7]。
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=20" target="_blank" class="pdf-link">マニュアルを見る (P.20)</a>
-      </li>
-      <li>
-        <strong>会社の画面を強制する（固定ポータル）：</strong><br>
-        社員が「自分専用の使いやすい画面」を作ることを禁止し、会社や部署が作ったトップ画面を強制的に表示させ続けるための設定です[8]。絶対に見てほしい情報がある場合に強権を発動する機能です[8]。
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=28" target="_blank" class="pdf-link">マニュアルを見る (P.28)</a>
-      </li>
-    </ul>
-  </div>
+    </main>
 
-  <div class="step-container">
-    <h2>ステップ4：各機能の「自社ルール」を細かく決める</h2>
-    <div class="badge">専門用語：各機能の基本設定</div>
-    <p>それぞれの機能に対して、会社ごとの運用ルールや選択肢のフォーマットを作っていきます。</p>
-    <ul>
-      <li>
-        <strong>スケジュールのルール：</strong><br>
-        他人の「非公開」の予定を見たとき、予定自体を完全に隠して見えなくするか、それとも「内容は内緒だけど予定は入っている」として時間帯だけはわかるようにするか等、プライバシーと情報共有のバランスを決めます[9]。
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=61" target="_blank" class="pdf-link">マニュアルを見る (P.61)</a>
-      </li>
-      <li>
-        <strong>交通費精算のルール：</strong><br>
-        社員が交通費を申請する画面で選ぶ、「電車」「バス」「タクシー」などの選択肢（プルダウン）を自社に合わせて作ります[10]。
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=108" target="_blank" class="pdf-link">マニュアルを見る (P.108)</a>
-      </li>
-      <li>
-        <strong>ワークフローのルール（ハンコ・稟議書）：</strong><br>
-        経費の申請書や稟議書などの「用紙フォーマット」を画面上に作ったり、「課長が承認した後に、部長が決裁する」というようなハンコリレー（承認ルート）のルールを作ります[11]。
-        <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=221" target="_blank" class="pdf-link">マニュアルを見る (P.221)</a>
-      </li>
-    </ul>
-  </div>
+    <footer class="bg-slate-800 text-slate-300 py-6 text-center text-sm">
+        <p>&copy; NI Collabo 360 System Manual Search DB (Offline Version)</p>
+    </footer>
 
+    <script>
+        // --- 仮想データベース (PDFの主要内容) ---
+        // 実際の運用では、この配列にPDFの目次や内容を追加していくことで検索精度が上がります。
+        const manualDB = [
+            {
+                category: "ポータル",
+                title: "ポータルの種類（マイ・共有・固定など）",
+                keywords: ["ポータル", "共有ポータル", "リンクポータル", "固定ポータル", "グリッド", "エクスパンド", "レイアウト"],
+                description: "ユーザー個人が作成する「マイポータル」、管理者が作成する「共有ポータル」「リンクポータル」「固定ポータル」についての説明と設定方法です。",
+                page: 11
+            },
+            {
+                category: "ポータル",
+                title: "シングルサインオン(パラメータ認証/自動POST認証)",
+                keywords: ["シングルサインオン", "SSO", "ログイン", "自動ログイン", "パラメータ認証", "POST認証"],
+                description: "ポータルパーツから他システム（外部ウェブページなど）へログイン情報を引き渡して自動ログインする機能（シングルサインオン）の設定方法です。",
+                page: 14
+            },
+            {
+                category: "ポータル",
+                title: "共有ポータルの設定",
+                keywords: ["共有ポータル", "グリッドポータル", "スクロールグリッド", "エクスパンド"],
+                description: "会社で共有使用するポータルを設定します。グリッドポータルやエクスパンドポータルの追加方法を解説しています。",
+                page: 20
+            },
+            {
+                category: "ポータル",
+                title: "メニューパレットの設定",
+                keywords: ["メニューパレット", "ショートカット", "アイコン", "カテゴリー"],
+                description: "全社共有で利用できるメニューアイコンや機能ショートカットを配置するメニューパレットの設定方法です。",
+                page: 30
+            },
+            {
+                category: "メール",
+                title: "メールサイズの制限と添付ファイル容量",
+                keywords: ["メール", "容量", "サイズ", "制限", "添付ファイル", "総メールサイズ"],
+                description: "1ユーザーあたりが保存できる総メールサイズの上限や、1通あたりの送信メール添付ファイルサイズの上限を設定します。",
+                page: 38
+            },
+            {
+                category: "メール",
+                title: "迷惑メール設定",
+                keywords: ["迷惑メール", "スパム", "受信拒否", "ブロック", "メール"],
+                description: "スパムメールや受け取りたくないメールのアドレスを設定し、自動的に迷惑メールBOXに振り分ける設定です。「*（アスタリスク）」を使った一括指定も可能です。",
+                page: 38
+            },
+            {
+                category: "メール",
+                title: "宛先指定（自動セット機能）",
+                keywords: ["メール", "宛先指定", "CC", "BCC", "自動追加"],
+                description: "社内または社外メール送信時に、指定した社員（上司など）のメールアドレスを自動的にCCやBCCにセットする機能です。",
+                page: 49
+            },
+            {
+                category: "共有メール",
+                title: "共有メールのアカウント設定",
+                keywords: ["共有メール", "アカウント", "登録", "オプション"],
+                description: "複数人で共有して利用するメールアカウントの登録や、オプション設定の編集について解説しています。",
+                page: 54
+            },
+            {
+                category: "スケジュール",
+                title: "スケジュールのアクセス制限と閲覧制限",
+                keywords: ["スケジュール", "アクセス制限", "閲覧制限", "権限", "見えない", "非公開"],
+                description: "特定の部署や役職のスケジュールに対して、閲覧・編集・削除ができるユーザーを制限する機能です。「アクセス制限」と登録時の「閲覧制限」の優先順位についても解説しています。",
+                page: 64
+            },
+            {
+                category: "スケジュール",
+                title: "スケジュールCSV読み込み（一括登録）",
+                keywords: ["スケジュール", "CSV", "一括登録", "インポート", "エクスポート"],
+                description: "スケジュールをCSVファイルから一括で登録する手順です。共有社員や設備・備品の登録、上書き条件、時間の指定方法について記載されています。",
+                page: 69
+            },
+            {
+                category: "行先伝言共有",
+                title: "在席区分の設定（稼働状態の紐付け）",
+                keywords: ["行先", "伝言", "在席区分", "稼働状態", "出社", "退社", "テレワーク"],
+                description: "「出張」や「直行」などの在席区分キーワードの設定と、テレワーク機能と連携するための「稼働状態（稼働中/非稼働）」の設定方法です。",
+                page: 76
+            },
+            {
+                category: "ナレッジ・コラボレーション",
+                title: "ナレッジ・コラボレーションの共通表示",
+                keywords: ["ナレッジ", "ルーム", "共通表示", "メッセージ"],
+                description: "社員全員に表示させるルームとメッセージを設定します。ポータル画面に表示される条件を定義します。",
+                page: 80
+            },
+            {
+                category: "文書共有管理",
+                title: "文書ファイルの権限設定（管理者・ごみ箱）",
+                keywords: ["文書", "ファイル", "権限", "ごみ箱", "削除", "共有"],
+                description: "文書共有管理者に全権限を付与する設定や、一般ユーザーに対するごみ箱の削除権限の許可/禁止を設定します。",
+                page: 92
+            },
+            {
+                category: "社員名簿",
+                title: "社員名簿フォームの設定・nyoibox連携",
+                keywords: ["社員名簿", "フォーム", "項目", "公開", "nyoibox", "編集権限"],
+                description: "社員名簿の各項目（携帯電話、住所など）の公開/非公開、本人編集可否を設定します。nyoiboxのデータを社員名簿に表示する連携設定も可能です。",
+                page: 100
+            },
+            {
+                category: "経費精算",
+                title: "経費精算の基本設定（精算期日・ワークフロー連携）",
+                keywords: ["経費精算", "精算期日", "ワークフロー連携", "基本設定"],
+                description: "経費の精算期日（月末締めなど）や、経費精算時にワークフロー機能と連携して申請書類を提出するかどうかの基本動作を設定します。",
+                page: 122
+            },
+            {
+                category: "経費精算",
+                title: "自動仕訳の設定",
+                keywords: ["経費精算", "仕訳", "自動仕訳", "勘定科目", "税区分"],
+                description: "経費カテゴリー（タクシー、交際費など）に応じて、借方勘定科目や税区分を自動でセットするためのルール（自動仕訳）を設定します。",
+                page: 147
+            },
+            {
+                category: "経費精算",
+                title: "代理申請の設定",
+                keywords: ["経費精算", "代理申請", "代行", "秘書", "役員"],
+                description: "出張時の経費などを、役員などの被代理者に代わって秘書（代理可能者）が申請できるようにするための設定です。",
+                page: 160
+            },
+            {
+                category: "支払管理",
+                title: "支払管理の基本設定（閲覧保護・ワークフロー連携）",
+                keywords: ["支払管理", "振込", "仕訳担当者", "閲覧保護", "ワークフロー"],
+                description: "仕訳担当者や振込担当者の指定、特定の支払情報を他の担当者から隠す「閲覧保護」機能、支払情報のワークフロー連携について設定します。",
+                page: 178
+            },
+            {
+                category: "設備・備品予約",
+                title: "設備・備品の一覧登録",
+                keywords: ["設備", "備品", "予約", "会議室", "社用車", "連続利用時間"],
+                description: "会議室やプロジェクターなどの設備・備品を登録します。利用可能時間帯や連続利用時間の上限などを設定できます。",
+                page: 188
+            },
+            {
+                category: "ワークフロー",
+                title: "申請書の役割設定（申請者・承認者・決裁者）",
+                keywords: ["ワークフロー", "役割", "申請者", "承認者", "決裁者", "名称変更"],
+                description: "ワークフロー上の「承認者」「決裁者」「業務担当者」などの名称を、自社の呼び方に合わせて変更・追加する設定です。",
+                page: 199
+            },
+            {
+                category: "ワークフロー",
+                title: "経路マスタ（条件分岐の設定）",
+                keywords: ["ワークフロー", "経路", "ルート", "条件分岐", "金額"],
+                description: "申請金額（例：100万円以上なら役員決裁）や特定条件によって承認ルートを自動で分岐させる、経路マスタの設定手順です。",
+                page: 211
+            },
+            {
+                category: "ワークフロー",
+                title: "申請書類の作成（項目設定）",
+                keywords: ["ワークフロー", "申請書類", "項目設定", "フォーム", "Excel", "レイアウト"],
+                description: "表計算ソフトで作成した様式を読み込んだり、入力項目（テキスト、数値、カレンダー等）を配置して申請フォームを作成する手順です。",
+                page: 224
+            },
+            {
+                category: "ワークフロー",
+                title: "代理処理（代理承認）の設定",
+                keywords: ["ワークフロー", "代理処理", "代理承認", "代行", "不在"],
+                description: "承認者や決裁者が不在の際に、代わりに部下などが承認処理を行えるようにする「代理処理」の設定と優先順位について解説しています。",
+                page: 290
+            },
+            {
+                category: "タイムカード",
+                title: "打刻禁止設定（IPアドレス制限）",
+                keywords: ["タイムカード", "打刻禁止", "IPアドレス", "制限", "自宅", "外出先"],
+                description: "会社からの打刻のみ許可し、自宅や外出先からの打刻を禁止したい場合に、許可するIPアドレスを設定して打刻を制限します。",
+                page: 321
+            },
+            {
+                category: "テレワーク",
+                title: "テレワークの基本設定（実績・操作モニタリング）",
+                keywords: ["テレワーク", "在宅勤務", "実績", "モニタリング", "自動退社", "応答要求"],
+                description: "テレワークの実績時間の記録有無、操作状況（アクセス回数）のモニタリング、指定時間経過後の自動退社機能などのルールを設定します。",
+                page: 330
+            },
+            {
+                category: "NI Collabo NOW!",
+                title: "安否確認の自動配信条件",
+                keywords: ["NOW", "安否確認", "災害", "地震", "自動配信", "気象庁"],
+                description: "気象庁の地震・津波情報と連動し、社員のスマートフォンアプリ「NOW!」へ自動的に安否確認のプッシュ通知を配信する条件（震度など）を設定します。",
+                page: 352
+            },
+            {
+                category: "SOS",
+                title: "SOS 見守り対象と通知条件の設定",
+                keywords: ["SOS", "見守り", "センサー", "通知条件", "緊急"],
+                description: "IoTセンサーからの情報を取得し、異常があった場合（一定時間動きがない等）に担当者や家族へ見守り通知を送るための設定です。",
+                page: 358
+            },
+            {
+                category: "電帳法ストレージ",
+                title: "電帳法ストレージの基本設定",
+                keywords: ["電帳法", "ストレージ", "電子帳簿保存法", "管理者", "通知"],
+                description: "電子帳簿保存法に対応した書類保存機能の基本設定です。管理者指定や未確定書類の通知日数を設定します。",
+                page: 364
+            }
+        ];
+
+        // --- DOM Elements ---
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const searchStatus = document.getElementById('searchStatus');
+        const searchCount = document.getElementById('searchCount');
+        const initialMessage = document.getElementById('initialMessage');
+        const searchContainer = document.querySelector('.search-container');
+
+        // --- Event Listeners ---
+        searchInput.addEventListener('focus', () => searchContainer.classList.add('search-focused'));
+        searchInput.addEventListener('blur', () => searchContainer.classList.remove('search-focused'));
+        
+        searchInput.addEventListener('input', () => {
+            if(searchInput.value.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+        });
+
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            searchInput.focus();
+            clearBtn.classList.add('hidden');
+            showInitialState();
+        });
+
+        searchBtn.addEventListener('click', executeSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') executeSearch();
+        });
+
+        document.querySelectorAll('.suggest-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                searchInput.value = e.target.textContent;
+                clearBtn.classList.remove('hidden');
+                executeSearch();
+            });
+        });
+
+        // --- Search & UI Logic ---
+        function executeSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            
+            if (!query) {
+                showInitialState();
+                return;
+            }
+
+            const searchTerms = query.split(/\s+/);
+
+            const results = manualDB.filter(item => {
+                const searchText = `${item.title} ${item.description} ${item.keywords.join(' ')} ${item.category}`.toLowerCase();
+                return searchTerms.every(term => searchText.includes(term));
+            });
+
+            renderResults(results, searchTerms);
+        }
+
+        function showInitialState() {
+            resultsContainer.innerHTML = '';
+            resultsContainer.appendChild(initialMessage);
+            searchStatus.classList.add('hidden');
+        }
+
+        function highlightText(text, terms) {
+            let highlighted = text;
+            terms.forEach(term => {
+                if (term.length > 0) {
+                    // エスケープ処理（正規表現エラー防止）
+                    const safeTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    const regex = new RegExp(`(${safeTerm})`, 'gi');
+                    highlighted = highlighted.replace(regex, '<span class="highlight">$1</span>');
+                }
+            });
+            return highlighted;
+        }
+
+        function renderResults(results, searchTerms) {
+            resultsContainer.innerHTML = '';
+            searchStatus.classList.remove('hidden');
+
+            if (results.length === 0) {
+                searchCount.innerHTML = `「<span class="font-bold text-slate-700">${searchInput.value}</span>」に一致するマニュアル項目は見つかりませんでした。`;
+                resultsContainer.innerHTML = `
+                    <div class="text-center py-12 bg-white rounded-xl border border-slate-200">
+                        <i class="fas fa-search-minus text-slate-300 text-4xl mb-4"></i>
+                        <p class="text-slate-500">別のキーワードを試すか、表記を変えてみてください。</p>
+                    </div>
+                `;
+                return;
+            }
+
+            searchCount.innerHTML = `検索結果: <span class="font-bold text-blue-600 text-lg">${results.length}</span> 件`;
+
+            results.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = `result-card bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden`;
+                card.style.animationDelay = `${index * 0.05}s`;
+
+                const highlightedTitle = highlightText(item.title, searchTerms);
+                const highlightedDesc = highlightText(item.description, searchTerms);
+
+                card.innerHTML = `
+                    <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                    <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                        <div class="flex-grow">
+                            <span class="inline-block px-2 py-1 bg-slate-100 text-slate-500 text-xs font-bold rounded mb-2">${item.category}</span>
+                            <h3 class="text-xl font-bold text-blue-900 mb-2">${highlightedTitle}</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">${highlightedDesc}</p>
+                            <div class="flex flex-wrap gap-1">
+                                ${item.keywords.slice(0, 5).map(kw => `<span class="text-xs text-slate-400 bg-slate-50 px-2 py-1 rounded">#${kw}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="md:w-48 flex-shrink-0 flex flex-col items-end justify-center">
+                            <div class="text-slate-400 text-xs font-bold mb-1">マニュアル該当ページ</div>
+                            <div class="text-3xl font-black text-slate-700 mb-3">P.${item.page}</div>
+                            <a href="https://www.ni-consul.jp/ni_us/manual/ge/system/system_collabo.pdf#page=${item.page}" 
+                               target="_blank" 
+                               class="inline-flex items-center justify-center w-full bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-bold py-2 px-4 rounded-lg transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>PDFを開く
+                            </a>
+                        </div>
+                    </div>
+                `;
+                resultsContainer.appendChild(card);
+            });
+        }
+    </script>
 </body>
 </html>
