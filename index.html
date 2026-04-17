@@ -18,28 +18,37 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .highlight { background-color: #fef08a; font-weight: bold; padding: 0 2px; border-radius: 2px; }
+        
+        /* 検索窓を上部に固定 */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
     </style>
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col">
 
-    <!-- Header -->
-    <header class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white py-12 shadow-md">
-        <div class="container mx-auto px-4 text-center max-w-4xl">
-            <h1 class="text-3xl md:text-4xl font-bold mb-4 tracking-tight"><i class="fas fa-book-open mr-3"></i>NI Collabo 360 設定FAQ検索</h1>
-            <p class="text-blue-100 text-lg mb-8">システム設定マニュアル（全374P）から、知りたい設定の該当ページを検索します。</p>
+    <!-- Header (Sticky) -->
+    <header class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white py-8 shadow-md sticky-header">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="text-center mb-6">
+                <h1 class="text-3xl md:text-4xl font-bold tracking-tight"><i class="fas fa-book-open mr-3"></i>NI Collabo 360 マニュアル検索</h1>
+                <p class="text-blue-100 mt-2 text-sm md:text-base">システム設定マニュアル（全374P）から、知りたい設定の該当ページを検索します。</p>
+            </div>
             
             <!-- Search Bar -->
-            <div class="relative w-full max-w-2xl mx-auto search-container bg-white rounded-full flex items-center p-2 border-2 border-transparent">
+            <div class="relative w-full max-w-3xl mx-auto search-container bg-white rounded-full flex items-center p-2 border-2 border-transparent shadow-lg">
                 <i class="fas fa-search text-slate-400 text-xl ml-4"></i>
                 <input type="text" id="searchInput" 
                     class="w-full bg-transparent border-none outline-none px-4 py-3 text-lg text-slate-700 placeholder-slate-400" 
                     placeholder="例: 「ワークフロー 代理」「パスワード」「シングルサインオン」..."
                     autocomplete="off">
-                <button id="searchBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-bold transition-colors flex items-center">
-                    検索
+                <button id="clearBtn" class="text-slate-400 hover:text-slate-600 hidden mr-2">
+                    <i class="fas fa-times-circle text-xl"></i>
                 </button>
-                <button id="clearBtn" class="absolute right-32 text-slate-400 hover:text-slate-600 hidden">
-                    <i class="fas fa-times-circle"></i>
+                <button id="searchBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-bold transition-colors">
+                    検索
                 </button>
             </div>
         </div>
@@ -50,8 +59,8 @@
         
         <!-- Search Status -->
         <div id="searchStatus" class="mb-6 text-slate-500 font-medium hidden flex justify-between items-end border-b border-slate-200 pb-2">
-            <span id="searchCount"></span>
-            <span class="text-xs text-slate-400"><i class="fas fa-file-pdf mr-1"></i>参照元: system_collabo.pdf</span>
+            <span id="searchCount" class="text-lg"></span>
+            <span class="text-sm text-slate-400"><i class="fas fa-file-pdf mr-1"></i>参照元: system_collabo.pdf</span>
         </div>
 
         <!-- Results Container -->
@@ -64,11 +73,11 @@
                 <h3 class="text-xl font-bold text-slate-700 mb-2">調べたいキーワードを入力してください</h3>
                 <p class="text-slate-500 mb-6">マニュアル内の該当機能、設定方法、参照ページを即座にご案内します。</p>
                 <div class="flex flex-wrap justify-center gap-2">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mr-2 self-center">よく検索されるワード:</span>
-                    <button class="suggest-btn bg-white border border-slate-300 text-slate-600 px-3 py-1 rounded-full text-sm hover:border-blue-400 hover:text-blue-600 transition">ポータル</button>
-                    <button class="suggest-btn bg-white border border-slate-300 text-slate-600 px-3 py-1 rounded-full text-sm hover:border-blue-400 hover:text-blue-600 transition">代理申請</button>
-                    <button class="suggest-btn bg-white border border-slate-300 text-slate-600 px-3 py-1 rounded-full text-sm hover:border-blue-400 hover:text-blue-600 transition">CSV</button>
-                    <button class="suggest-btn bg-white border border-slate-300 text-slate-600 px-3 py-1 rounded-full text-sm hover:border-blue-400 hover:text-blue-600 transition">アクセス制限</button>
+                    <span class="text-sm font-bold text-slate-400 uppercase tracking-wider mr-2 self-center">よく検索されるワード:</span>
+                    <button class="suggest-btn bg-slate-50 border border-slate-200 text-slate-600 px-4 py-2 rounded-full text-sm hover:bg-blue-50 hover:text-blue-600 transition">ポータル</button>
+                    <button class="suggest-btn bg-slate-50 border border-slate-200 text-slate-600 px-4 py-2 rounded-full text-sm hover:bg-blue-50 hover:text-blue-600 transition">代理申請</button>
+                    <button class="suggest-btn bg-slate-50 border border-slate-200 text-slate-600 px-4 py-2 rounded-full text-sm hover:bg-blue-50 hover:text-blue-600 transition">CSV</button>
+                    <button class="suggest-btn bg-slate-50 border border-slate-200 text-slate-600 px-4 py-2 rounded-full text-sm hover:bg-blue-50 hover:text-blue-600 transition">アクセス制限</button>
                 </div>
             </div>
         </div>
@@ -80,205 +89,38 @@
     </footer>
 
     <script>
-        // --- 仮想データベース (PDFの主要内容) ---
-        // 実際の運用では、この配列にPDFの目次や内容を追加していくことで検索精度が上がります。
+        // --- 仮想データベース (PDFマニュアルの内容を模したJSON) ---
         const manualDB = [
-            {
-                category: "ポータル",
-                title: "ポータルの種類（マイ・共有・固定など）",
-                keywords: ["ポータル", "共有ポータル", "リンクポータル", "固定ポータル", "グリッド", "エクスパンド", "レイアウト"],
-                description: "ユーザー個人が作成する「マイポータル」、管理者が作成する「共有ポータル」「リンクポータル」「固定ポータル」についての説明と設定方法です。",
-                page: 11
-            },
-            {
-                category: "ポータル",
-                title: "シングルサインオン(パラメータ認証/自動POST認証)",
-                keywords: ["シングルサインオン", "SSO", "ログイン", "自動ログイン", "パラメータ認証", "POST認証"],
-                description: "ポータルパーツから他システム（外部ウェブページなど）へログイン情報を引き渡して自動ログインする機能（シングルサインオン）の設定方法です。",
-                page: 14
-            },
-            {
-                category: "ポータル",
-                title: "共有ポータルの設定",
-                keywords: ["共有ポータル", "グリッドポータル", "スクロールグリッド", "エクスパンド"],
-                description: "会社で共有使用するポータルを設定します。グリッドポータルやエクスパンドポータルの追加方法を解説しています。",
-                page: 20
-            },
-            {
-                category: "ポータル",
-                title: "メニューパレットの設定",
-                keywords: ["メニューパレット", "ショートカット", "アイコン", "カテゴリー"],
-                description: "全社共有で利用できるメニューアイコンや機能ショートカットを配置するメニューパレットの設定方法です。",
-                page: 30
-            },
-            {
-                category: "メール",
-                title: "メールサイズの制限と添付ファイル容量",
-                keywords: ["メール", "容量", "サイズ", "制限", "添付ファイル", "総メールサイズ"],
-                description: "1ユーザーあたりが保存できる総メールサイズの上限や、1通あたりの送信メール添付ファイルサイズの上限を設定します。",
-                page: 38
-            },
-            {
-                category: "メール",
-                title: "迷惑メール設定",
-                keywords: ["迷惑メール", "スパム", "受信拒否", "ブロック", "メール"],
-                description: "スパムメールや受け取りたくないメールのアドレスを設定し、自動的に迷惑メールBOXに振り分ける設定です。「*（アスタリスク）」を使った一括指定も可能です。",
-                page: 38
-            },
-            {
-                category: "メール",
-                title: "宛先指定（自動セット機能）",
-                keywords: ["メール", "宛先指定", "CC", "BCC", "自動追加"],
-                description: "社内または社外メール送信時に、指定した社員（上司など）のメールアドレスを自動的にCCやBCCにセットする機能です。",
-                page: 49
-            },
-            {
-                category: "共有メール",
-                title: "共有メールのアカウント設定",
-                keywords: ["共有メール", "アカウント", "登録", "オプション"],
-                description: "複数人で共有して利用するメールアカウントの登録や、オプション設定の編集について解説しています。",
-                page: 54
-            },
-            {
-                category: "スケジュール",
-                title: "スケジュールのアクセス制限と閲覧制限",
-                keywords: ["スケジュール", "アクセス制限", "閲覧制限", "権限", "見えない", "非公開"],
-                description: "特定の部署や役職のスケジュールに対して、閲覧・編集・削除ができるユーザーを制限する機能です。「アクセス制限」と登録時の「閲覧制限」の優先順位についても解説しています。",
-                page: 64
-            },
-            {
-                category: "スケジュール",
-                title: "スケジュールCSV読み込み（一括登録）",
-                keywords: ["スケジュール", "CSV", "一括登録", "インポート", "エクスポート"],
-                description: "スケジュールをCSVファイルから一括で登録する手順です。共有社員や設備・備品の登録、上書き条件、時間の指定方法について記載されています。",
-                page: 69
-            },
-            {
-                category: "行先伝言共有",
-                title: "在席区分の設定（稼働状態の紐付け）",
-                keywords: ["行先", "伝言", "在席区分", "稼働状態", "出社", "退社", "テレワーク"],
-                description: "「出張」や「直行」などの在席区分キーワードの設定と、テレワーク機能と連携するための「稼働状態（稼働中/非稼働）」の設定方法です。",
-                page: 76
-            },
-            {
-                category: "ナレッジ・コラボレーション",
-                title: "ナレッジ・コラボレーションの共通表示",
-                keywords: ["ナレッジ", "ルーム", "共通表示", "メッセージ"],
-                description: "社員全員に表示させるルームとメッセージを設定します。ポータル画面に表示される条件を定義します。",
-                page: 80
-            },
-            {
-                category: "文書共有管理",
-                title: "文書ファイルの権限設定（管理者・ごみ箱）",
-                keywords: ["文書", "ファイル", "権限", "ごみ箱", "削除", "共有"],
-                description: "文書共有管理者に全権限を付与する設定や、一般ユーザーに対するごみ箱の削除権限の許可/禁止を設定します。",
-                page: 92
-            },
-            {
-                category: "社員名簿",
-                title: "社員名簿フォームの設定・nyoibox連携",
-                keywords: ["社員名簿", "フォーム", "項目", "公開", "nyoibox", "編集権限"],
-                description: "社員名簿の各項目（携帯電話、住所など）の公開/非公開、本人編集可否を設定します。nyoiboxのデータを社員名簿に表示する連携設定も可能です。",
-                page: 100
-            },
-            {
-                category: "経費精算",
-                title: "経費精算の基本設定（精算期日・ワークフロー連携）",
-                keywords: ["経費精算", "精算期日", "ワークフロー連携", "基本設定"],
-                description: "経費の精算期日（月末締めなど）や、経費精算時にワークフロー機能と連携して申請書類を提出するかどうかの基本動作を設定します。",
-                page: 122
-            },
-            {
-                category: "経費精算",
-                title: "自動仕訳の設定",
-                keywords: ["経費精算", "仕訳", "自動仕訳", "勘定科目", "税区分"],
-                description: "経費カテゴリー（タクシー、交際費など）に応じて、借方勘定科目や税区分を自動でセットするためのルール（自動仕訳）を設定します。",
-                page: 147
-            },
-            {
-                category: "経費精算",
-                title: "代理申請の設定",
-                keywords: ["経費精算", "代理申請", "代行", "秘書", "役員"],
-                description: "出張時の経費などを、役員などの被代理者に代わって秘書（代理可能者）が申請できるようにするための設定です。",
-                page: 160
-            },
-            {
-                category: "支払管理",
-                title: "支払管理の基本設定（閲覧保護・ワークフロー連携）",
-                keywords: ["支払管理", "振込", "仕訳担当者", "閲覧保護", "ワークフロー"],
-                description: "仕訳担当者や振込担当者の指定、特定の支払情報を他の担当者から隠す「閲覧保護」機能、支払情報のワークフロー連携について設定します。",
-                page: 178
-            },
-            {
-                category: "設備・備品予約",
-                title: "設備・備品の一覧登録",
-                keywords: ["設備", "備品", "予約", "会議室", "社用車", "連続利用時間"],
-                description: "会議室やプロジェクターなどの設備・備品を登録します。利用可能時間帯や連続利用時間の上限などを設定できます。",
-                page: 188
-            },
-            {
-                category: "ワークフロー",
-                title: "申請書の役割設定（申請者・承認者・決裁者）",
-                keywords: ["ワークフロー", "役割", "申請者", "承認者", "決裁者", "名称変更"],
-                description: "ワークフロー上の「承認者」「決裁者」「業務担当者」などの名称を、自社の呼び方に合わせて変更・追加する設定です。",
-                page: 199
-            },
-            {
-                category: "ワークフロー",
-                title: "経路マスタ（条件分岐の設定）",
-                keywords: ["ワークフロー", "経路", "ルート", "条件分岐", "金額"],
-                description: "申請金額（例：100万円以上なら役員決裁）や特定条件によって承認ルートを自動で分岐させる、経路マスタの設定手順です。",
-                page: 211
-            },
-            {
-                category: "ワークフロー",
-                title: "申請書類の作成（項目設定）",
-                keywords: ["ワークフロー", "申請書類", "項目設定", "フォーム", "Excel", "レイアウト"],
-                description: "表計算ソフトで作成した様式を読み込んだり、入力項目（テキスト、数値、カレンダー等）を配置して申請フォームを作成する手順です。",
-                page: 224
-            },
-            {
-                category: "ワークフロー",
-                title: "代理処理（代理承認）の設定",
-                keywords: ["ワークフロー", "代理処理", "代理承認", "代行", "不在"],
-                description: "承認者や決裁者が不在の際に、代わりに部下などが承認処理を行えるようにする「代理処理」の設定と優先順位について解説しています。",
-                page: 290
-            },
-            {
-                category: "タイムカード",
-                title: "打刻禁止設定（IPアドレス制限）",
-                keywords: ["タイムカード", "打刻禁止", "IPアドレス", "制限", "自宅", "外出先"],
-                description: "会社からの打刻のみ許可し、自宅や外出先からの打刻を禁止したい場合に、許可するIPアドレスを設定して打刻を制限します。",
-                page: 321
-            },
-            {
-                category: "テレワーク",
-                title: "テレワークの基本設定（実績・操作モニタリング）",
-                keywords: ["テレワーク", "在宅勤務", "実績", "モニタリング", "自動退社", "応答要求"],
-                description: "テレワークの実績時間の記録有無、操作状況（アクセス回数）のモニタリング、指定時間経過後の自動退社機能などのルールを設定します。",
-                page: 330
-            },
-            {
-                category: "NI Collabo NOW!",
-                title: "安否確認の自動配信条件",
-                keywords: ["NOW", "安否確認", "災害", "地震", "自動配信", "気象庁"],
-                description: "気象庁の地震・津波情報と連動し、社員のスマートフォンアプリ「NOW!」へ自動的に安否確認のプッシュ通知を配信する条件（震度など）を設定します。",
-                page: 352
-            },
-            {
-                category: "SOS",
-                title: "SOS 見守り対象と通知条件の設定",
-                keywords: ["SOS", "見守り", "センサー", "通知条件", "緊急"],
-                description: "IoTセンサーからの情報を取得し、異常があった場合（一定時間動きがない等）に担当者や家族へ見守り通知を送るための設定です。",
-                page: 358
-            },
-            {
-                category: "電帳法ストレージ",
-                title: "電帳法ストレージの基本設定",
-                keywords: ["電帳法", "ストレージ", "電子帳簿保存法", "管理者", "通知"],
-                description: "電子帳簿保存法に対応した書類保存機能の基本設定です。管理者指定や未確定書類の通知日数を設定します。",
-                page: 364
-            }
+            { category: "ポータル", title: "ポータルの種類（マイ・共有・固定など）", keywords: ["ポータル", "共有ポータル", "リンクポータル", "固定ポータル", "グリッド", "エクスパンド", "レイアウト"], description: "ユーザー個人が作成する「マイポータル」、管理者が作成する「共有ポータル」「リンクポータル」「固定ポータル」についての説明と設定方法です。", page: 11 },
+            { category: "ポータル", title: "シングルサインオン(SSO)の設定", keywords: ["シングルサインオン", "SSO", "ログイン", "自動ログイン", "パラメータ認証", "POST認証", "外部連携"], description: "ポータルパーツから他システムへログイン情報を引き渡して自動ログインする機能（パラメータ認証/POST認証）の設定方法です。", page: 14 },
+            { category: "ポータル", title: "共有ポータルの設定と追加", keywords: ["共有ポータル", "グリッドポータル", "スクロールグリッド", "エクスパンド", "配置", "追加"], description: "会社で共有使用するポータルを設定します。グリッドポータルやエクスパンドポータルの追加、パーツの配置方法を解説しています。", page: 20 },
+            { category: "ポータル", title: "メニューパレットの設定", keywords: ["メニューパレット", "ショートカット", "アイコン", "カテゴリー", "ナビゲーション"], description: "全社共有で利用できるメニューアイコンや機能ショートカットを配置する「メニューパレット」の設定方法とカテゴリー追加手順です。", page: 30 },
+            { category: "メール", title: "メールサイズの制限と添付ファイル容量", keywords: ["メール", "容量", "サイズ", "制限", "添付ファイル", "総メールサイズ"], description: "1ユーザーあたりが保存できる総メールサイズの上限や、1通あたりの送信メール添付ファイルサイズの上限を一律で設定します。", page: 38 },
+            { category: "メール", title: "迷惑メール設定", keywords: ["迷惑メール", "スパム", "受信拒否", "ブロック", "ブラックリスト"], description: "スパムメールや受け取りたくないメールのアドレスを設定し、迷惑メールBOXに振り分ける設定です。「*（アスタリスク）」を使ったドメイン一括指定も可能です。", page: 38 },
+            { category: "メール", title: "宛先指定（自動セット機能）", keywords: ["メール", "宛先指定", "CC", "BCC", "自動追加", "送信"], description: "社内または社外メール送信時に、指定した社員（上司や特定部署など）のメールアドレスを自動的にCCやBCCにセットする機能です。", page: 49 },
+            { category: "共有メール", title: "共有メールのアカウント設定", keywords: ["共有メール", "アカウント", "登録", "オプション", "複数人", "代表アドレス"], description: "「info@」や「sales@」など、複数人で共有して利用するメールアカウントの登録や、オプション設定の編集について解説しています。", page: 54 },
+            { category: "スケジュール", title: "スケジュールのアクセス制限", keywords: ["スケジュール", "アクセス制限", "閲覧制限", "権限", "非公開", "見せない"], description: "特定の部署や役職のスケジュールに対して、閲覧・編集・削除ができるユーザーを制限する機能です。社長や役員の予定を秘匿する際などに利用します。", page: 64 },
+            { category: "スケジュール", title: "スケジュールCSV読み込み（一括登録）", keywords: ["スケジュール", "CSV", "一括登録", "インポート", "エクスポート", "予定"], description: "予定データをCSVファイルから一括で登録する手順です。共有社員や設備・備品の同時登録、上書き条件のルールについて記載されています。", page: 69 },
+            { category: "行先伝言共有", title: "在席区分の設定と稼働状態", keywords: ["行先", "伝言", "在席区分", "稼働状態", "出社", "退社", "直行", "直帰", "テレワーク"], description: "「出張」や「直行」などの在席区分キーワードの作成と、テレワーク機能と連携するための「稼働状態（稼働中/非稼働）」の設定方法です。", page: 76 },
+            { category: "ナレッジ・コラボレーション", title: "全社共通のルーム表示設定", keywords: ["ナレッジ", "ルーム", "共通表示", "メッセージ", "掲示板", "全社"], description: "社員全員のポータル画面に強制的に表示させるナレッジルームと、表示するメッセージ件数の条件を定義します。", page: 80 },
+            { category: "文書共有管理", title: "文書ファイルの権限設定", keywords: ["文書", "ファイル", "権限", "ごみ箱", "削除", "共有", "フォルダ"], description: "文書共有管理者に全権限を付与する設定や、一般ユーザーに対するごみ箱の削除権限の許可/禁止を設定し、不正削除を防止します。", page: 92 },
+            { category: "社員名簿", title: "社員名簿フォームの設定・nyoibox連携", keywords: ["社員名簿", "フォーム", "項目", "公開", "nyoibox", "編集権限", "プロフィール"], description: "社員名簿の各項目（携帯電話、住所など）の公開/非公開、本人編集可否を設定します。nyoiboxのデータ（保有資格など）を社員名簿に表示する連携も可能です。", page: 100 },
+            { category: "経費精算", title: "経費精算の基本設定", keywords: ["経費精算", "精算期日", "ワークフロー連携", "基本設定", "小口現金", "コーポレートカード"], description: "経費の精算期日（月末締めなど）や、経費申請時にワークフロー機能と連携して承認を回すかどうかの基本動作を設定します。", page: 122 },
+            { category: "経費精算", title: "自動仕訳の設定", keywords: ["経費精算", "仕訳", "自動仕訳", "勘定科目", "税区分", "借方", "貸方"], description: "経費カテゴリー（タクシー、交際費など）に応じて、借方勘定科目や税区分を自動でセットするためのルール（自動仕訳）を設定します。手動切り替えの手間を省きます。", page: 147 },
+            { category: "経費精算", title: "代理申請の設定", keywords: ["経費精算", "代理申請", "代行", "秘書", "役員", "代わり"], description: "出張時の経費などを、役員などの「被代理者」に代わって秘書などの「代理可能者」が申請できるようにするための設定と、適用優先順位についてです。", page: 160 },
+            { category: "経費精算", title: "ICカード交通費精算連携", keywords: ["経費精算", "ICカード", "Suica", "交通費", "リーダー", "PASMO"], description: "鉄道系ICカード（Suica等）の利用履歴を読み取るWindowsアプリケーションのダウンロードと、Felicaリーダーを利用した連携方法についてです。", page: 172 },
+            { category: "支払管理", title: "支払管理の基本設定（閲覧保護）", keywords: ["支払管理", "振込", "仕訳担当者", "閲覧保護", "ワークフロー", "機密"], description: "仕訳担当者や振込担当者の指定、役員報酬など特定の支払情報を他の担当者から隠す「閲覧保護」機能について設定します。", page: 178 },
+            { category: "設備・備品予約", title: "設備・備品の一覧登録", keywords: ["設備", "備品", "予約", "会議室", "社用車", "連続利用時間", "制限"], description: "会議室やプロジェクターなどの設備・備品を登録します。利用可能時間帯や、1回の予約で確保できる連続利用時間の上限などを設定できます。", page: 188 },
+            { category: "ワークフロー", title: "申請書の役割設定（申請者・承認者・決裁者）", keywords: ["ワークフロー", "役割", "申請者", "承認者", "決裁者", "名称変更", "業務担当者"], description: "ワークフロー上の「承認者」「決裁者」「業務担当者」などの名称を、自社の呼び方（例: 部長、社長、経理担当）に合わせて変更・追加する設定です。", page: 199 },
+            { category: "ワークフロー", title: "経路マスタ（条件分岐の設定）", keywords: ["ワークフロー", "経路", "ルート", "条件分岐", "金額", "分岐", "承認ルート"], description: "「申請金額が100万円以上なら役員決裁へ、未満なら部長決裁へ」のように、特定条件によって承認ルートを自動で分岐させる経路マスタの設定手順です。", page: 211 },
+            { category: "ワークフロー", title: "申請書類の作成（項目設定）", keywords: ["ワークフロー", "申請書類", "項目設定", "フォーム", "Excel", "レイアウト", "稟議書"], description: "表計算ソフト(xlsx)で作成した様式を読み込んで背景にし、その上に入力項目（テキスト、数値、カレンダー、自動計算等）を配置して電子フォームを作成する手順です。", page: 224 },
+            { category: "ワークフロー", title: "代理処理（代理承認）の設定", keywords: ["ワークフロー", "代理処理", "代理承認", "代行", "不在", "承認代行"], description: "承認者や決裁者が不在（出張や休暇など）の際に、代わりに部下などが承認処理を行えるようにする「代理処理」の設定と、適用される優先順位について解説しています。", page: 290 },
+            { category: "ワークフロー", title: "申請元の情報を更新する（SFA連携）", keywords: ["ワークフロー", "SFA", "連携", "更新", "nyoibox", "顧客情報"], description: "ワークフローの承認が完了したタイミングで、Sales Force Assistantの顧客情報やnyoiboxのデータを自動的に更新・書き換える連携設定の運用イメージです。", page: 316 },
+            { category: "タイムカード", title: "打刻禁止設定（IPアドレス制限）", keywords: ["タイムカード", "打刻禁止", "IPアドレス", "制限", "自宅", "外出先", "不正防止"], description: "会社（社内ネットワーク）からの打刻のみ許可し、自宅や外出先からの不正な打刻を禁止したい場合に、許可するIPアドレスを設定して制限します。", page: 321 },
+            { category: "テレワーク", title: "テレワークの基本設定（自動退社・応答要求）", keywords: ["テレワーク", "在宅勤務", "実績", "モニタリング", "自動退社", "応答要求", "サボり防止"], description: "テレワークの実績時間の記録、終了予定時刻超過後の「自動退社」機能、ランダムな時間に現在地や写真を求める「応答要求」などのルールを設定します。", page: 330 },
+            { category: "NI Collabo NOW!", title: "安否確認の自動配信条件", keywords: ["NOW", "安否確認", "災害", "地震", "津波", "自動配信", "気象庁"], description: "気象庁の地震・津波情報と連動し、対象地域にいる社員のスマートフォンアプリ「NOW!」へ自動的に安否確認のプッシュ通知を配信する条件（震度など）を設定します。", page: 352 },
+            { category: "SOS", title: "SOS 見守り対象と通知条件の設定", keywords: ["SOS", "見守り", "センサー", "通知条件", "緊急", "IoT", "安否"], description: "IoTセンサーからの通信情報を取得し、異常があった場合（一定時間動きがない等）に担当者や家族へメールやプッシュ通知で見守り通知を送るための設定です。", page: 358 },
+            { category: "電帳法ストレージ", title: "電帳法ストレージの基本設定", keywords: ["電帳法", "ストレージ", "電子帳簿保存法", "管理者", "通知", "スキャナ保存"], description: "電子帳簿保存法に対応した書類保存機能の基本設定です。ストレージ管理者指定、未確定書類の通知日数、ワークフロー連携による自動保管の設定を行います。", page: 364 }
         ];
 
         // --- DOM Elements ---
@@ -352,7 +194,6 @@
             let highlighted = text;
             terms.forEach(term => {
                 if (term.length > 0) {
-                    // エスケープ処理（正規表現エラー防止）
                     const safeTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                     const regex = new RegExp(`(${safeTerm})`, 'gi');
                     highlighted = highlighted.replace(regex, '<span class="highlight">$1</span>');
@@ -366,7 +207,7 @@
             searchStatus.classList.remove('hidden');
 
             if (results.length === 0) {
-                searchCount.innerHTML = `「<span class="font-bold text-slate-700">${searchInput.value}</span>」に一致するマニュアル項目は見つかりませんでした。`;
+                searchCount.innerHTML = `「<span class="font-bold text-slate-700">${searchInput.value}</span>」に一致する項目はありません。`;
                 resultsContainer.innerHTML = `
                     <div class="text-center py-12 bg-white rounded-xl border border-slate-200">
                         <i class="fas fa-search-minus text-slate-300 text-4xl mb-4"></i>
